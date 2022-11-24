@@ -1,0 +1,57 @@
+<div class="ui container">
+  <h1 style="padding-top: 2rem; text-align: center">Angular CRUD</h1>
+  <div class="ui form">
+    <div class="field">
+      <label>Nama Barang</label>
+      <input type="text" [(ngModel)]="nama" name="nama" autocomplete="off" />
+    </div>
+    <div class="field">
+      <label>Stok</label>
+      <input type="number" [(ngModel)]="stok" name="stok" autocomplete="off" />
+    </div>
+    <div class="field">
+      <label>Harga</label>
+      <input
+        type="number"
+        [(ngModel)]="harga"
+        name="harga"
+        autocomplete="off"
+      />
+    </div>
+    <div class="ui inverted primary button" *ngIf="!isEdit" (click)="simpan()">
+      Simpan
+    </div>
+    <div class="ui inverted primary button" *ngIf="isEdit" (click)="edit()">
+      Perbarui
+    </div>
+    <div class="ui inverted secondary button" (click)="reset()">Reset</div>
+  </div>
+  <table class="ui celled table">
+    <thead>
+      <tr class="ui center aligned">
+        <th>Nama Barang</th>
+        <th>Stok</th>
+        <th>Harga</th>
+        <th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let item of this.myData" class="ui center aligned">
+      <tr>
+        <td data-label="Nama Barang">{{ item.namaBarang }}</td>
+        <td data-label="Stok">{{ item.stokBarang.toLocaleString(["id"]) }}</td>
+        <td data-label="Harga">
+          Rp. {{ item.hargaBarang.toLocaleString(["id"]) }}
+        </td>
+        <td data-label="Aksi">
+          <div class="ui buttons">
+            <button class="ui positive button" (click)="getEdit(item)">
+              Edit
+            </button>
+            <div class="or" data-text="/"></div>
+            <button class="ui button" (click)="delete(item)">Hapus</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
