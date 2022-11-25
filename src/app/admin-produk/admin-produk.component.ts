@@ -19,9 +19,7 @@ export class AdminProdukComponent implements OnInit {
   constructor(private firestore: AngularFirestore) {
     this.tampilData();
   }
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
+  ngOnInit(): void {}
 
   tampilData() {
     let data = this.firestore.collection('barang');
