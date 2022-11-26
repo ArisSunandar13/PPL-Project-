@@ -36,6 +36,7 @@ export class AuthService {
       () => {
         this.router.navigate(['/dashboard']);
         localStorage.removeItem('token');
+        window.location.reload();
       },
       (err) => {
         alert(err.message);
