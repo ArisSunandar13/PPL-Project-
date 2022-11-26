@@ -16,7 +16,6 @@ export class AuthService {
       },
       (err) => {
         alert('Something went wrong');
-        this.router.navigate(['/login']);
       }
     );
   }
@@ -24,7 +23,6 @@ export class AuthService {
     this.fireauth.createUserWithEmailAndPassword(email, password).then(
       (userCredential) => {
         alert('Registration successful');
-        this.router.navigate(['/login']);
         return userCredential.user;
       },
       (err) => {
