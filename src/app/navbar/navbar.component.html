@@ -7,16 +7,49 @@
   />
   <div class="container ui fixed inverted menu segment">
     <div class="ui container inverted secondary pointing menu">
-      <a class="item {{ produkActive }}" routerLink="/admin-produk"> Produk </a>
-      <a class="item {{ promosiActive }}" routerLink="/admin-promosi">
+      <a
+        class="item {{ dashboardActive }}"
+        routerLink="/dashboard"
+        *ngIf="menuAnon || menuAdmin"
+      >
+        Dashboard
+      </a>
+      <a
+        class="item {{ aboutusActive }}"
+        routerLink="/about-us"
+        *ngIf="menuAnon || menuAdmin"
+      >
+        About Us
+      </a>
+      <a
+        class="item {{ produkActive }}"
+        routerLink="/admin-produk"
+        *ngIf="menuAdmin"
+      >
+        Produk
+      </a>
+      <a
+        class="item {{ promosiActive }}"
+        routerLink="/admin-promosi"
+        *ngIf="menuAdmin"
+      >
         Promosi
       </a>
-      <a class="item {{ pembayaranActive }}" routerLink="/admin-pembayaran">
+      <a
+        class="item {{ pembayaranActive }}"
+        routerLink="/admin-pembayaran"
+        *ngIf="menuAdmin"
+      >
         Pembayaran
       </a>
-      <div class="right menu">
+      <div class="right menu" *ngIf="menuAdmin">
         <div class="item">
-          <a (click)="signout()" class="ui negative button">Log Out</a>
+          <a (click)="signout()" class="ui negative button">Logout</a>
+        </div>
+      </div>
+      <div class="right menu" *ngIf="menuAnon">
+        <div class="item">
+          <a class="ui primary button" routerLink="/login">Login/Signup</a>
         </div>
       </div>
     </div>

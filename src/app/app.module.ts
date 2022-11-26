@@ -14,6 +14,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AdminPembayaranComponent } from './admin-pembayaran/admin-pembayaran.component';
 import { AdminPromosiComponent } from './admin-promosi/admin-promosi.component';
+import { AboutUsComponent } from './about-us/about-us.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { AdminPromosiComponent } from './admin-promosi/admin-promosi.component';
     DashboardComponent,
     AdminPembayaranComponent,
     AdminPromosiComponent,
+    AboutUsComponent,
   ],
   imports: [
     BrowserModule,

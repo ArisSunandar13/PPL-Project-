@@ -10,8 +10,8 @@ export class AuthService {
   login(email: string, password: string) {
     this.fireauth.signInWithEmailAndPassword(email, password).then(
       (userCredential) => {
-        localStorage.setItem('token', 'true');
-        this.router.navigate(['admin-produk']);
+        localStorage.setItem('token', 'disinitoken');
+        this.router.navigate(['/admin-produk']);
         return userCredential.user;
       },
       (err) => {
@@ -23,6 +23,7 @@ export class AuthService {
     this.fireauth.createUserWithEmailAndPassword(email, password).then(
       (userCredential) => {
         alert('Registration successful');
+        window.location.reload();
         return userCredential.user;
       },
       (err) => {
@@ -33,8 +34,8 @@ export class AuthService {
   logout() {
     this.fireauth.signOut().then(
       () => {
+        this.router.navigate(['/dashboard']);
         localStorage.removeItem('token');
-        this.router.navigate(['/login']);
       },
       (err) => {
         alert(err.message);

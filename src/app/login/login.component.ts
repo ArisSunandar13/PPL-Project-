@@ -22,7 +22,6 @@ export class LoginComponent implements OnInit {
       return;
     } else {
       this.user = this.auth.login(this.email, this.password);
-      console.log(this.user);
     }
   }
   signup() {
@@ -34,7 +33,6 @@ export class LoginComponent implements OnInit {
       return;
     } else {
       this.user = this.auth.signup(this.email, this.password);
-      console.log(this.user);
     }
   }
 }
