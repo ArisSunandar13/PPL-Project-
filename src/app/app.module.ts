@@ -12,6 +12,8 @@ import { AdminProdukComponent } from './admin-produk/admin-produk.component';
 import { LoginComponent } from './login/login.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AdminPembayaranComponent } from './admin-pembayaran/admin-pembayaran.component';
+import { AdminPromosiComponent } from './admin-promosi/admin-promosi.component';
 
 @NgModule({
   declarations: [
@@ -19,16 +21,18 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     AdminProdukComponent,
     LoginComponent,
     NavbarComponent,
-    DashboardComponent
+    DashboardComponent,
+    AdminPembayaranComponent,
+    AdminPromosiComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     AngularFireModule.initializeApp(env.firebaseConfig),
-    AngularFirestoreModule
+    AngularFirestoreModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,21 +1,24 @@
 <div>
   <link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
-  integrity="sha256-9mbkOfVho3ZPXfM7W8sV2SndrGDuh7wuyLjtsWeTI1Q="
-  crossorigin="anonymous"
-/>
-<div class="container ui fixed inverted menu segment">
-  <div class="ui container inverted secondary pointing menu">
-    <a class="active item" routerLink="/admin-produk"> Produk </a>
-    <a class="item"> Promosi </a>
-    <a class="item"> Pembayaran </a>
-    <div class="right menu">
-      <div class="item">
-        <a (click)="signout()" class="ui negative button">Log Out</a>
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
+    integrity="sha256-9mbkOfVho3ZPXfM7W8sV2SndrGDuh7wuyLjtsWeTI1Q="
+    crossorigin="anonymous"
+  />
+  <div class="container ui fixed inverted menu segment">
+    <div class="ui container inverted secondary pointing menu">
+      <a class="item {{ produkActive }}" routerLink="/admin-produk"> Produk </a>
+      <a class="item {{ promosiActive }}" routerLink="/admin-promosi">
+        Promosi
+      </a>
+      <a class="item {{ pembayaranActive }}" routerLink="/admin-pembayaran">
+        Pembayaran
+      </a>
+      <div class="right menu">
+        <div class="item">
+          <a (click)="signout()" class="ui negative button">Log Out</a>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
 </div>

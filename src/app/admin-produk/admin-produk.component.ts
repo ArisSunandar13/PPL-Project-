@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { PassdataService } from '../shared/passdata.service';
 
 @Component({
   selector: 'app-admin-produk',
@@ -13,13 +14,19 @@ export class AdminProdukComponent implements OnInit {
   nama: string | undefined;
   stok: string | undefined;
   harga: string | undefined;
+  iAm = 'produk';
 
   isEdit: boolean | undefined;
 
-  constructor(private firestore: AngularFirestore) {
+  constructor(
+    private firestore: AngularFirestore,
+    public passData: PassdataService
+  ) {
     this.tampilData();
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.passData.throwData(this.iAm);
+  }
 
   tampilData() {
     let data = this.firestore.collection('barang');

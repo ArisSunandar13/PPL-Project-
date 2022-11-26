@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { PassdataService } from '../shared/passdata.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -6,13 +7,13 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-  navbar = true;
+  iAm = 'dashboard';
 
   @Output() newItemEvent = new EventEmitter<boolean>();
 
-  constructor() {}
+  constructor(public passData: PassdataService) {}
 
   ngOnInit(): void {
-    this.newItemEvent.emit(this.navbar);
+    this.passData.throwData(this.iAm);
   }
 }
