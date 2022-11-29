@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { finalize } from 'rxjs';
+import { FileMetadata } from '../model/file-metadata';
+import { FileService } from '../shared/file.service';
 import { PassdataService } from '../shared/passdata.service';
 
 @Component({
@@ -15,17 +19,79 @@ export class AdminProdukComponent implements OnInit {
   stok: string | undefined;
   harga: string | undefined;
   iAm = 'produk';
-
   isEdit: boolean | undefined;
+
+  selectedFiles!: FileList;
+  currentFileUpload!: FileMetadata;
+  // percentage: number = 0;
+  listOfFiles: any[] = [];
 
   constructor(
     private firestore: AngularFirestore,
-    public passData: PassdataService
+    public passData: PassdataService,
+    private fileService: FileService,
+    private fireStorage: AngularFireStorage
   ) {
     this.tampilData();
   }
   ngOnInit(): void {
     this.passData.throwData(this.iAm);
+    this.getAllFile();
+  }
+
+  selectFile(event: any) {
+    this.selectedFiles = event.target.files;
+  }
+  uploadFile() {
+    this.currentFileUpload = new FileMetadata(this.selectedFiles[0]);
+    const path = 'uploads/' + this.currentFileUpload.file.name;
+    const storageRef = this.fireStorage.ref(path);
+    const uploadTask = storageRef.put(this.selectedFiles[0]);
+
+    uploadTask
+      .snapshotChanges()
+      .pipe(
+        finalize(() => {
+          storageRef.getDownloadURL().subscribe((downloadLink) => {
+            this.currentFileUpload.url = downloadLink;
+            this.currentFileUpload.size = this.currentFileUpload.file.size;
+            this.currentFileUpload.name = this.currentFileUpload.file.name;
+
+            this.fileService.saveMetaDataOfFile(this.currentFileUpload);
+            this.ngOnInit();
+          });
+        })
+      )
+      .subscribe(
+        (res) => {
+          console.log(res);
+        },
+        (err) => {
+          console.log('Error occured');
+        }
+      );
+  }
+  getAllFile() {
+    this.fileService.getAllFiles().subscribe(
+      (res) => {
+        console.log(res);
+        this.listOfFiles = res.map((e) => {
+          console.log(e.payload.doc.data());
+          let data = e.payload.doc.data();
+          // data = e.payload.doc.id;
+          return data;
+        });
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+  deleteFile(file: FileMetadata) {
+    if (window.confirm('Are you sure you want to delete' + file.name + '?')) {
+      this.fileService.deleteFile(file);
+      this.ngOnInit();
+    }
   }
 
   tampilData() {

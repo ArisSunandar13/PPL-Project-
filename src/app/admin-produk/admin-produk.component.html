@@ -27,13 +27,54 @@
         autocomplete="off"
       />
     </div>
-    <div class="ui inverted primary button" *ngIf="!isEdit" (click)="simpan()">
-      Simpan
+    <div class="field" style="display: inline">
+      <input style="width: 300px" type="file" (change)="selectFile($event)" />
+      <button
+        style="margin: 0px 10px; height: 44px"
+        class="upload ui negative basic button"
+        [disabled]="!selectedFiles"
+        (click)="uploadFile()"
+      >
+        Upload
+      </button>
     </div>
-    <div class="ui inverted primary button" *ngIf="isEdit" (click)="edit()">
-      Perbarui
+    <div class="field">
+      <table>
+        <thead>
+          <tr>
+            <th>file name</th>
+            <th>file size</th>
+            <th>action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let file of listOfFiles">
+            <td>{{ file.name }}</td>
+            <td>{{ file.size }}</td>
+            <td>
+              <a href="{{ file.url }}" target="_blank">{{file.url}}</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <div class="ui inverted secondary button" (click)="reset()">Reset</div>
+    <div class="field" style="margin-top: 15px">
+      <div
+        style="margin: 0px 5px"
+        class="ui primary button"
+        *ngIf="!isEdit"
+        (click)="simpan()"
+      >
+        Simpan
+      </div>
+      <div
+        style="margin: 0px 5px"
+        class="ui inverted secondary button"
+        (click)="reset()"
+      >
+        Reset
+      </div>
+    </div>
   </div>
   <table class="ui celled table">
     <thead>
@@ -44,7 +85,7 @@
         <th>Aksi</th>
       </tr>
     </thead>
-    <tbody *ngFor="let item of this.myData" class="ui center aligned">
+    <tbody *ngFor="let item of myData" class="ui center aligned">
       <tr>
         <td data-label="Nama Barang">{{ item.namaBarang }}</td>
         <td data-label="Stok">{{ item.stokBarang.toLocaleString(["id"]) }}</td>
