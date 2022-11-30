@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PassdataService } from '../shared/passdata.service';
+import { FileService } from '../shared/file.service';
 
 @Component({
   selector: 'app-about-us',
@@ -9,9 +9,9 @@ import { PassdataService } from '../shared/passdata.service';
 export class AboutUsComponent implements OnInit {
   iAm = 'about-us';
 
-  constructor(public passData: PassdataService) {}
+  constructor(public fileService: FileService) {}
 
   ngOnInit(): void {
-    this.passData.throwData(this.iAm);
+    this.fileService.throwData(this.iAm);
   }
 }

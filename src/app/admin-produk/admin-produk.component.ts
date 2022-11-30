@@ -4,7 +4,6 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize } from 'rxjs';
 import { FileMetadata } from '../model/file-metadata';
 import { FileService } from '../shared/file.service';
-import { PassdataService } from '../shared/passdata.service';
 
 @Component({
   selector: 'app-admin-produk',
@@ -13,38 +12,41 @@ import { PassdataService } from '../shared/passdata.service';
 })
 export class AdminProdukComponent implements OnInit {
   title = 'angular-firestore';
+  iAm = 'produk';
   myData: any[] = [];
   id: string | undefined;
   nama: string | undefined;
   stok: string | undefined;
   harga: string | undefined;
-  iAm = 'produk';
   isEdit: boolean | undefined;
+  isUpload = false;
+  isSimpan = false;
 
   selectedFiles!: FileList;
   currentFileUpload!: FileMetadata;
-  // percentage: number = 0;
   listOfFiles: any[] = [];
 
   constructor(
     private firestore: AngularFirestore,
-    public passData: PassdataService,
     private fileService: FileService,
     private fireStorage: AngularFireStorage
   ) {
     this.tampilData();
   }
   ngOnInit(): void {
-    this.passData.throwData(this.iAm);
+    this.fileService.throwData(this.iAm);
     this.getAllFile();
   }
 
   selectFile(event: any) {
+    this.isUpload = true;
     this.selectedFiles = event.target.files;
   }
   uploadFile() {
     this.currentFileUpload = new FileMetadata(this.selectedFiles[0]);
-    const path = 'uploads/' + this.currentFileUpload.file.name;
+    const path =
+      'uploads/' +
+      (Math.floor(Math.random() * 10) + this.currentFileUpload.file.name);
     const storageRef = this.fireStorage.ref(path);
     const uploadTask = storageRef.put(this.selectedFiles[0]);
 
@@ -58,6 +60,8 @@ export class AdminProdukComponent implements OnInit {
             this.currentFileUpload.name = this.currentFileUpload.file.name;
 
             this.fileService.saveMetaDataOfFile(this.currentFileUpload);
+            this.isSimpan = true;
+            this.isUpload = false;
             this.ngOnInit();
           });
         })
@@ -74,11 +78,10 @@ export class AdminProdukComponent implements OnInit {
   getAllFile() {
     this.fileService.getAllFiles().subscribe(
       (res) => {
-        console.log(res);
-        this.listOfFiles = res.map((e) => {
-          console.log(e.payload.doc.data());
+        this.listOfFiles = res.map((e: any) => {
           let data = e.payload.doc.data();
-          // data = e.payload.doc.id;
+          data.id = e.payload.doc.id;
+          console.log(data.id);
           return data;
         });
       },
@@ -106,12 +109,15 @@ export class AdminProdukComponent implements OnInit {
       namaBarang: this.nama,
       stokBarang: this.stok,
       hargaBarang: this.harga,
+      fotoId: this.currentFileUpload.id,
+      fotoName: this.currentFileUpload.name,
+      fotoUrl: this.currentFileUpload.url,
     };
     this.firestore
       .collection('barang')
       .add(data)
       .then((res) => {
-        console.log(res);
+        this.isSimpan = false;
         this.tampilData();
         this.reset();
       })
@@ -153,19 +159,11 @@ export class AdminProdukComponent implements OnInit {
       });
   }
 
-  delete(arr: { id: string | undefined }) {
-    this.firestore
-      .collection('barang')
-      .doc(arr.id)
-      .delete()
-      .then((res) => {
-        console.log(res);
-        this.tampilData();
-        this.reset();
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+  delete(arr: { id: string | undefined }, file: any) {
+    console.log(file);
+    this.deleteFile(file);
+    this.firestore.collection('barang').doc(arr.id).delete();
+    this.ngOnInit();
   }
 
   reset() {

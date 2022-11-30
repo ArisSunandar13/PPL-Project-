@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PassdataService } from '../shared/passdata.service';
+import { FileService } from '../shared/file.service';
 
 @Component({
   selector: 'app-admin-pembayaran',
@@ -8,9 +8,9 @@ import { PassdataService } from '../shared/passdata.service';
 })
 export class AdminPembayaranComponent implements OnInit {
   iAm = 'pembayaran';
-  constructor(public passData: PassdataService) {}
+  constructor(public fileService: FileService) {}
 
   ngOnInit(): void {
-    this.passData.throwData(this.iAm);
+    this.fileService.throwData(this.iAm);
   }
 }

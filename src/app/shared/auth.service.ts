@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   constructor(private fireauth: AngularFireAuth, private router: Router) {}
+
   login(email: string, password: string) {
     this.fireauth.signInWithEmailAndPassword(email, password).then(
       (userCredential) => {

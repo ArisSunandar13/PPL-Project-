@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../shared/auth.service';
-import { PassdataService } from '../shared/passdata.service';
+import { FileService } from '../shared/file.service';
 
 @Component({
   selector: 'app-navbar',
@@ -18,10 +18,10 @@ export class NavbarComponent implements OnInit {
   public menuAdmin = true;
   public menuAnon = true;
 
-  constructor(private auth: AuthService, public passData: PassdataService) {}
+  constructor(private auth: AuthService, public fileService: FileService) {}
 
   ngOnInit(): void {
-    this.isActive = this.passData.catchData();
+    this.isActive = this.fileService.catchData();
     if (this.isLogin === 'disinitoken') {
       this.menuAdmin = true;
       this.menuAnon = false;

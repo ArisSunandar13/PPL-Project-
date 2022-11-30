@@ -32,7 +32,7 @@
       <button
         style="margin: 0px 10px; height: 44px"
         class="upload ui negative basic button"
-        [disabled]="!selectedFiles"
+        [disabled]="!isUpload"
         (click)="uploadFile()"
       >
         Upload
@@ -50,22 +50,32 @@
         <tbody>
           <tr *ngFor="let file of listOfFiles">
             <td>{{ file.name }}</td>
-            <td>{{ file.size }}</td>
+            <td>{{ file.id }}</td>
             <td>
-              <a href="{{ file.url }}" target="_blank">{{file.url}}</a>
+              <a href="{{ file.url }}" target="_blank">{{ file.name }}</a>
+              <button (click)="deleteFile(file)">X</button>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
     <div class="field" style="margin-top: 15px">
-      <div
+      <button
         style="margin: 0px 5px"
         class="ui primary button"
         *ngIf="!isEdit"
+        [disabled]="!isSimpan"
         (click)="simpan()"
       >
         Simpan
+      </button>
+      <div
+        style="margin: 0px 5px"
+        class="ui inverted primary button"
+        *ngIf="isEdit"
+        (click)="edit()"
+      >
+        Perbarui
       </div>
       <div
         style="margin: 0px 5px"
@@ -82,6 +92,7 @@
         <th>Nama Barang</th>
         <th>Stok</th>
         <th>Harga</th>
+        <th>Foto</th>
         <th>Aksi</th>
       </tr>
     </thead>
@@ -92,13 +103,18 @@
         <td data-label="Harga">
           Rp. {{ item.hargaBarang.toLocaleString(["id"]) }}
         </td>
+        <td data-label="Foto">
+          <img style="height: 100px" src="{{ item.fotoUrl }}" alt="" />
+        </td>
         <td data-label="Aksi">
           <div class="ui buttons">
             <button class="ui positive button" (click)="getEdit(item)">
               Edit
             </button>
             <div class="or" data-text="/"></div>
-            <button class="ui button" (click)="delete(item)">Hapus</button>
+            <button class="ui button" (click)="delete(item, item)">
+              Hapus
+            </button>
           </div>
         </td>
       </tr>

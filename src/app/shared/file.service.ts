@@ -7,10 +7,20 @@ import { FileMetadata } from '../model/file-metadata';
   providedIn: 'root',
 })
 export class FileService {
+  iAmIs = '';
+
   constructor(
     private fireStore: AngularFirestore,
     private fireStorage: AngularFireStorage
   ) {}
+
+  throwData(whoSend: string) {
+    this.iAmIs = whoSend;
+  }
+
+  catchData() {
+    return this.iAmIs;
+  }
 
   saveMetaDataOfFile(fileObj: FileMetadata) {
     const fileMeta = {
@@ -29,6 +39,7 @@ export class FileService {
   }
 
   deleteFile(fileMeta: FileMetadata) {
+    console.log(fileMeta.id);
     this.fireStore.collection('/upload').doc(fileMeta.id).delete();
     this.fireStorage.ref('/uploads/' + fileMeta.name).delete();
   }
