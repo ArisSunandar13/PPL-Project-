@@ -39,7 +39,16 @@ export class FileService {
   }
 
   deleteFile(fileMeta: any) {
-    this.fireStore.collection('/upload').doc(fileMeta.fotoId).delete();
-    this.fireStorage.ref('/uploads/' + fileMeta.fotoName).delete();
+    let id: any;
+    let name: any;
+    if (fileMeta.fotoId === undefined) {
+      id = fileMeta.id;
+      name = fileMeta.name;
+    } else if (fileMeta.id === undefined) {
+      id = fileMeta.fotoId;
+      name = fileMeta.fotoName;
+    }
+    this.fireStore.collection('/upload').doc(fileMeta.id).delete();
+    this.fireStorage.ref('/uploads/' + fileMeta.name).delete();
   }
 }
