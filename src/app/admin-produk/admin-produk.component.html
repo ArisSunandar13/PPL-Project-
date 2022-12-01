@@ -28,7 +28,7 @@
       />
     </div>
     <div class="field" style="display: inline">
-      <input style="width: 300px" type="file" (change)="selectFile($event)" />
+      <input style="width: 300px" type="file" (change)="selectFile($event)" [(ngModel)]="afterUpload"/>
       <button
         style="margin: 0px 10px; height: 44px"
         class="upload ui negative basic button"

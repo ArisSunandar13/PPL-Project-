@@ -21,6 +21,8 @@ export class AdminProdukComponent implements OnInit {
   isEdit: boolean | undefined;
   isUpload = false;
   isSimpan = false;
+  tempId: any;
+  afterUpload = '';
 
   selectedFiles!: FileList;
   currentFileUpload!: FileMetadata;
@@ -34,6 +36,7 @@ export class AdminProdukComponent implements OnInit {
     this.tampilData();
   }
   ngOnInit(): void {
+    console.log(this.tempId);
     this.fileService.throwData(this.iAm);
     this.getAllFile();
   }
@@ -41,12 +44,12 @@ export class AdminProdukComponent implements OnInit {
   selectFile(event: any) {
     this.isUpload = true;
     this.selectedFiles = event.target.files;
+    console.log(this.afterUpload);
+    this.uploadFile();
   }
   uploadFile() {
     this.currentFileUpload = new FileMetadata(this.selectedFiles[0]);
-    const path =
-      'uploads/' +
-      (Math.floor(Math.random() * 10) + this.currentFileUpload.file.name);
+    const path = 'uploads/' + (this.nama + this.currentFileUpload.file.name);
     const storageRef = this.fireStorage.ref(path);
     const uploadTask = storageRef.put(this.selectedFiles[0]);
 
@@ -57,18 +60,21 @@ export class AdminProdukComponent implements OnInit {
           storageRef.getDownloadURL().subscribe((downloadLink) => {
             this.currentFileUpload.url = downloadLink;
             this.currentFileUpload.size = this.currentFileUpload.file.size;
-            this.currentFileUpload.name = this.currentFileUpload.file.name;
+            this.currentFileUpload.name =
+              this.nama + this.currentFileUpload.file.name;
 
             this.fileService.saveMetaDataOfFile(this.currentFileUpload);
             this.isSimpan = true;
             this.isUpload = false;
+            console.log(this.afterUpload);
+            this.afterUpload = '';
             this.ngOnInit();
           });
         })
       )
       .subscribe(
         (res) => {
-          console.log(res);
+          return res;
         },
         (err) => {
           console.log('Error occured');
@@ -81,7 +87,7 @@ export class AdminProdukComponent implements OnInit {
         this.listOfFiles = res.map((e: any) => {
           let data = e.payload.doc.data();
           data.id = e.payload.doc.id;
-          console.log(data.id);
+          this.tempId = data;
           return data;
         });
       },
@@ -109,10 +115,11 @@ export class AdminProdukComponent implements OnInit {
       namaBarang: this.nama,
       stokBarang: this.stok,
       hargaBarang: this.harga,
-      fotoId: this.currentFileUpload.id,
+      fotoId: this.tempId.id,
       fotoName: this.currentFileUpload.name,
       fotoUrl: this.currentFileUpload.url,
     };
+    console.log(data);
     this.firestore
       .collection('barang')
       .add(data)

@@ -38,9 +38,8 @@ export class FileService {
     return this.fireStore.collection('/upload').snapshotChanges();
   }
 
-  deleteFile(fileMeta: FileMetadata) {
-    console.log(fileMeta.id);
-    this.fireStore.collection('/upload').doc(fileMeta.id).delete();
-    this.fireStorage.ref('/uploads/' + fileMeta.name).delete();
+  deleteFile(fileMeta: any) {
+    this.fireStore.collection('/upload').doc(fileMeta.fotoId).delete();
+    this.fireStorage.ref('/uploads/' + fileMeta.fotoName).delete();
   }
 }
