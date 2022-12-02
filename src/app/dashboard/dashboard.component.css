@@ -1,21 +1,40 @@
-.container {
+/* .container {
   width: 900px;
+} */
+
+div.container {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  right: 0;
 }
 
 .card {
   background-color: #fff;
   border: none;
   border-radius: 10px;
-  width: 190px;
+  width: 250px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+div.col-md-3 {
+  padding: 15px;
 }
 
 .image-container {
   position: relative;
+  height: 300px;
 }
 
 .thumbnail-image {
   border-radius: 10px !important;
+}
+
+img{
+  display: block;
+  margin: auto;
+  height: 300px;
+  width: auto;
 }
 
 .discount {
@@ -49,16 +68,16 @@
 .dress-name {
   font-size: 13px;
   font-weight: bold;
-  width: 75%;
+  width: 55%;
 }
 
 .new-price {
-  font-size: 13px;
+  font-size: 16px;
   font-weight: bold;
   color: red;
 }
 .old-price {
-  font-size: 8px;
+  font-size: 12px;
   font-weight: bold;
   color: grey;
 }
@@ -157,7 +176,8 @@
   background-color: #fff;
   border: none;
   border-radius: 10px;
-  width: 190px;
+  width: 250px;
+  height: 50px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   overflow: hidden;
 }
@@ -173,12 +193,14 @@
   font-weight: 500;
 }
 .voutcher-code {
+  margin-top: 5px;
   color: red;
   font-size: 11px;
   font-weight: bold;
 }
 .voutcher-right {
   width: 40%;
+  height: 50px;
   background-color: purple;
   color: #fff;
 }

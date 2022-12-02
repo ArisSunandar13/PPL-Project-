@@ -1,14 +1,7 @@
-<!-- <link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
-  integrity="sha256-9mbkOfVho3ZPXfM7W8sV2SndrGDuh7wuyLjtsWeTI1Q="
-  crossorigin="anonymous"
-/> -->
-
 <app-navbar></app-navbar>
 
 <div class="ui container">
-  <h1 style="padding-top: 2rem; text-align: center">Manajemen Promosi</h1>
+  <h1 style="padding-top: 2rem; padding-bottom: 3rem;text-align: center">Manajemen Promosi</h1>
   <div class="ui form">
     <div class="field">
       <label>Nama Barang</label>
@@ -103,19 +96,19 @@
       </div>
     </div>
   </div>
-  <table *ngFor="let item of myData" class="ui celled table">
+  <table class="ui celled table">
     <thead>
       <tr class="ui center aligned">
         <th>Nama Barang</th>
         <th>Stok</th>
         <th>Harga Asal</th>
-        <th *ngIf="item.hargaBarangPromo !== undefined">Harga Promo</th>
+        <th>Harga Promo</th>
         <th>Foto</th>
         <th>Aksi</th>
       </tr>
     </thead>
     <tbody class="ui center aligned">
-      <tr>
+      <tr *ngFor="let item of myData">
         <td data-label="Nama Barang">{{ item.namaBarang }}</td>
         <td data-label="Stok">{{ item.stokBarang.toLocaleString(["id"]) }}</td>
         <td data-label="Harga">
@@ -124,8 +117,9 @@
         <td data-label="Harga" *ngIf="item.hargaBarangPromo !== undefined">
           Rp. {{ item.hargaBarangPromo.toLocaleString(["id"]) }}
         </td>
+        <td data-label="" *ngIf="item.hargaBarangPromo === undefined"></td>
         <td data-label="Foto">
-          <img style="height: 100px" src="{{ item.fotoUrl }}" alt="" />
+          <img style="height: 100px" [src]="item.fotoUrl" alt="" />
         </td>
         <td data-label="Aksi">
           <div class="ui buttons">

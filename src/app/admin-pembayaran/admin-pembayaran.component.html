@@ -1,2 +1,46 @@
 <app-navbar></app-navbar>
-<p>admin-pembayaran works!</p>
+
+<div class="ui container">
+  <h1 style="padding-top: 2rem; text-align: center">Manajemen Pembayaran</h1>
+  <table class="ui celled table">
+    <thead>
+      <tr class="ui center aligned">
+        <th>Nama Barang</th>
+        <th>Stok</th>
+        <th>Harga Asal</th>
+        <th>Harga Promo</th>
+        <th>Foto</th>
+        <th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody class="ui center aligned">
+      <tr *ngFor="let produk of myData">
+        <td data-label="Nama Barang">{{ produk.namaBarang }}</td>
+        <td data-label="Stok">
+          {{ produk.stokBarang.toLocaleString(["id"]) }}
+        </td>
+        <td data-label="Harga">
+          Rp. {{ produk.hargaBarang.toLocaleString(["id"]) }}
+        </td>
+        <td data-label="Harga" *ngIf="produk.hargaBarangPromo !== undefined">
+          Rp. {{ produk.hargaBarangPromo.toLocaleString(["id"]) }}
+        </td>
+        <td data-label="" *ngIf="produk.hargaBarangPromo === undefined"></td>
+        <td data-label="Foto">
+          <img style="height: 100px" [src]="produk.fotoUrl" alt="" />
+        </td>
+        <td data-label="Aksi">
+          <div class="ui buttons">
+            <button class="ui positive button" (click)="getEdit(produk)">
+              Edit
+            </button>
+            <div class="or" data-text="/"></div>
+            <button class="ui button" (click)="delete(produk, produk)">
+              Hapus
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

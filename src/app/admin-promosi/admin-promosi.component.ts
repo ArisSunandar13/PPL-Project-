@@ -36,7 +36,6 @@ export class AdminPromosiComponent implements OnInit {
     this.tampilData();
   }
   ngOnInit(): void {
-    console.log(this.tempId);
     this.fileService.throwData(this.iAm);
     this.getAllFile();
   }
@@ -81,6 +80,7 @@ export class AdminPromosiComponent implements OnInit {
         }
       );
   }
+
   getAllFile() {
     this.fileService.getAllFiles().subscribe(
       (res) => {
@@ -96,6 +96,7 @@ export class AdminPromosiComponent implements OnInit {
       }
     );
   }
+
   deleteFile(file: FileMetadata) {
     if (window.confirm('Are you sure you want to delete' + file.name + '?')) {
       this.fileService.deleteFile(file);
@@ -161,7 +162,6 @@ export class AdminPromosiComponent implements OnInit {
       .doc(this.id)
       .update(data)
       .then((res) => {
-        console.log(res);
         this.tampilData();
         this.reset();
       })
