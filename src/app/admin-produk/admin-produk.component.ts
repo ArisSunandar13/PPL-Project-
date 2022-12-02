@@ -11,7 +11,6 @@ import { FileService } from '../shared/file.service';
   styleUrls: ['./admin-produk.component.css'],
 })
 export class AdminProdukComponent implements OnInit {
-  title = 'angular-firestore';
   iAm = 'produk';
   myData: any[] = [];
   id: string | undefined;

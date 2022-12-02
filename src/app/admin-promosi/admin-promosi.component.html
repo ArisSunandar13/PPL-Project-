@@ -1,2 +1,144 @@
+<!-- <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
+  integrity="sha256-9mbkOfVho3ZPXfM7W8sV2SndrGDuh7wuyLjtsWeTI1Q="
+  crossorigin="anonymous"
+/> -->
+
 <app-navbar></app-navbar>
-<p>admin-promosi works!</p>
+
+<div class="ui container">
+  <h1 style="padding-top: 2rem; text-align: center">Manajemen Promosi</h1>
+  <div class="ui form">
+    <div class="field">
+      <label>Nama Barang</label>
+      <input type="text" [(ngModel)]="nama" name="nama" autocomplete="off" />
+    </div>
+    <div class="field">
+      <label>Stok</label>
+      <input type="number" [(ngModel)]="stok" name="stok" autocomplete="off" />
+    </div>
+    <div class="field">
+      <label>Harga Asal</label>
+      <input
+        type="number"
+        [(ngModel)]="hargaAsal"
+        name="harga"
+        autocomplete="off"
+      />
+    </div>
+    <div class="field">
+      <label>Harga Promo</label>
+      <input
+        type="number"
+        [(ngModel)]="hargaPromo"
+        name="harga"
+        autocomplete="off"
+      />
+    </div>
+    <div class="field" style="display: inline">
+      <input
+        style="width: 300px"
+        type="file"
+        (change)="selectFile($event)"
+        [(ngModel)]="afterUpload"
+      />
+      <!-- <button
+        style="margin: 0px 10px; height: 44px"
+        class="upload ui negative basic button"
+        [disabled]="!isUpload"
+        (click)="uploadFile()"
+      >
+        Upload
+      </button> -->
+    </div>
+    <!-- <div class="field">
+      <table>
+        <thead>
+          <tr>
+            <th>Id gambar</th>
+            <th>Nama Gambar</th>
+            <th>Link Gambar</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let file of listOfFiles">
+            <td>{{ file.id }}</td>
+            <td>{{ file.name }}</td>
+            <td>
+              <a href="{{ file.url }}" target="_blank">{{ file.name }}</a>
+            </td>
+            <td>
+              <button (click)="deleteFile(file)">X</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div> -->
+    <div class="field" style="margin-top: 15px">
+      <button
+        style="margin: 0px 5px"
+        class="ui primary button"
+        *ngIf="!isEdit"
+        [disabled]="!isSimpan"
+        (click)="simpan()"
+      >
+        Simpan
+      </button>
+      <div
+        style="margin: 0px 5px"
+        class="ui inverted primary button"
+        *ngIf="isEdit"
+        (click)="edit()"
+      >
+        Perbarui
+      </div>
+      <div
+        style="margin: 0px 5px"
+        class="ui inverted secondary button"
+        (click)="reset()"
+      >
+        Reset
+      </div>
+    </div>
+  </div>
+  <table *ngFor="let item of myData" class="ui celled table">
+    <thead>
+      <tr class="ui center aligned">
+        <th>Nama Barang</th>
+        <th>Stok</th>
+        <th>Harga Asal</th>
+        <th *ngIf="item.hargaBarangPromo !== undefined">Harga Promo</th>
+        <th>Foto</th>
+        <th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody class="ui center aligned">
+      <tr>
+        <td data-label="Nama Barang">{{ item.namaBarang }}</td>
+        <td data-label="Stok">{{ item.stokBarang.toLocaleString(["id"]) }}</td>
+        <td data-label="Harga">
+          Rp. {{ item.hargaBarang.toLocaleString(["id"]) }}
+        </td>
+        <td data-label="Harga" *ngIf="item.hargaBarangPromo !== undefined">
+          Rp. {{ item.hargaBarangPromo.toLocaleString(["id"]) }}
+        </td>
+        <td data-label="Foto">
+          <img style="height: 100px" src="{{ item.fotoUrl }}" alt="" />
+        </td>
+        <td data-label="Aksi">
+          <div class="ui buttons">
+            <button class="ui positive button" (click)="getEdit(item)">
+              Edit
+            </button>
+            <div class="or" data-text="/"></div>
+            <button class="ui button" (click)="delete(item, item)">
+              Hapus
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
