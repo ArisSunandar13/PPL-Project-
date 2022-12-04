@@ -35,8 +35,8 @@ export class AdminPromosiComponent implements OnInit {
     private firestore: AngularFirestore,
     private fileService: FileService,
     private fireStorage: AngularFireStorage,
-    private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private fireStore: AngularFirestore
   ) {
     this.tampilData();
   }
@@ -108,13 +108,6 @@ export class AdminPromosiComponent implements OnInit {
     );
   }
 
-  deleteFile(file: FileMetadata) {
-    if (window.confirm('Are you sure you want to delete' + file.name + '?')) {
-      this.fileService.deleteFile(file);
-      this.ngOnInit();
-    }
-  }
-
   tampilData() {
     let data = this.firestore.collection('barang');
     let dataTerbaru = data.valueChanges({ idField: 'id' });
@@ -181,11 +174,19 @@ export class AdminPromosiComponent implements OnInit {
       });
   }
 
-  delete(arr: { id: string | undefined }, file: any) {
-    console.log(file);
-    this.deleteFile(file);
-    this.firestore.collection('barang').doc(arr.id).delete();
-    this.ngOnInit();
+  delete(data: any) {
+    console.log(data);
+
+    if (
+      window.confirm('Are you sure you want to delete ' + data.namaBarang + '?')
+    ) {
+      this.fireStore.collection('/upload').doc(data.id).delete();
+      this.fireStorage.ref('/uploads/' + data.fotoName).delete();
+      this.firestore.collection('barang').doc(data.id).delete();
+      this.ngOnInit();
+    } else {
+      this.ngOnInit();
+    }
   }
 
   reset() {
