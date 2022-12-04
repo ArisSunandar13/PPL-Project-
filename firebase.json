@@ -1,7 +1,6 @@
 {
   "hosting": {
-    "site": "ppl-project",
-    "public": "public",
+    "public": "dist/ppl-project",
     "ignore": [
       "firebase.json",
       "**/.*",

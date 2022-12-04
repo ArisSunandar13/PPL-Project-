@@ -10,6 +10,7 @@
 <app-navbar></app-navbar>
 
 <div class="container mt-5">
+  <div class="judul"><p class="cloud-text cloud-title">Toko Momy Tika</p></div>
   <div class="row">
     <div class="col-md-3" *ngFor="let produk of myData">
       <div class="card">
@@ -19,7 +20,7 @@
               <span
                 class="discount"
                 *ngIf="produk.hargaBarangPromo === undefined"
-                style="visibility: hidden;"
+                style="visibility: hidden"
               ></span>
               <span
                 class="discount"
@@ -57,13 +58,14 @@
               >
               <small
                 class="old-price text-right"
-                *ngIf="produk.hargaBarangPromo !== undefined" style="text-decoration-line: line-through;"
+                *ngIf="produk.hargaBarangPromo !== undefined"
+                style="text-decoration-line: line-through"
                 >Rp. {{ produk.hargaBarang.toLocaleString(["id"]) }}</small
               >
               <small
                 class="old-price text-right"
                 *ngIf="produk.hargaBarangPromo === undefined"
-                style="visibility: hidden;"
+                style="visibility: hidden"
                 >-</small
               >
             </div>

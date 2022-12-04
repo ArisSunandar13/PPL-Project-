@@ -1,10 +1,38 @@
-/* .container {
-  width: 900px;
-} */
+@import url("https://fonts.googleapis.com/css?family=Coiny");
+.cloud-text {
+  font-family: "Coiny", cursive;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/769286/clouds.jpg);
+  background-attachment: unset;
+  background-position: 0%;
+  width: 100%;
+  height: 75px;
+  margin: 0px;
+  font-weight: 900;
+  font-size: 4rem;
+  animation: clouds-moving infinite 220s;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+  animation-timing-function: linear;
+  text-align: center;
+}
+
+@keyframes clouds-moving {
+  0% {
+    background-position: 0%;
+  }
+  50% {
+    background-position: 100%;
+  }
+  100% {
+    background-position: 0%;
+  }
+}
 
 div.container {
   position: absolute;
-  top: 50px;
+  top: 20px;
   left: 0;
   right: 0;
 }
@@ -181,7 +209,7 @@ button.buy:hover {
   border: 0px;
 }
 
-button.buy:active{
+button.buy:active {
   border: 0px solid white;
 }
 

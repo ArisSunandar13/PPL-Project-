@@ -6,6 +6,10 @@
   border-radius: 10px;
   box-shadow: 5px 20px 50px #000;
 }
+.judul{
+  width: 350px;
+  margin: 0px 0px 75px 0px;
+}
 #chk {
   display: none;
 }
