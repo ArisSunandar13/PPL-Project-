@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Router } from '@angular/router';
 import { FileMetadata } from '../model/file-metadata';
+import { AuthService } from '../shared/auth.service';
 import { FileService } from '../shared/file.service';
 
 @Component({
@@ -16,27 +18,45 @@ export class AdminPembayaranComponent implements OnInit {
   stok: string | undefined;
   hargaAsal: string | undefined;
   hargaPromo: string | undefined;
+  isLogin = false;
+  total1 = 0;
+  total2 = 0;
+  totalDiskon = 0;
 
   constructor(
     public fileService: FileService,
-    private firestore: AngularFirestore
+    private firestore: AngularFirestore,
+    private auth: AuthService,
+    private router: Router
   ) {
     this.tampilData();
   }
 
   ngOnInit(): void {
+    if (localStorage.getItem('token') !== null) {
+      this.isLogin = true;
+    }
+    if (!this.isLogin) {
+      this.router.navigate(['/login']);
+    }
     this.fileService.throwData(this.iAm);
   }
 
   parse(data: any) {
-    console.log(data);
     return parseInt(data);
   }
 
   tampilData() {
-    let data = this.firestore.collection('barang');
+    let data = this.firestore.collection('checkout');
     let dataTerbaru = data.valueChanges({ idField: 'id' });
-    dataTerbaru.subscribe((ss) => (this.myData = ss));
+    dataTerbaru.subscribe((ss) => {
+      this.myData = ss;
+      this.myData.forEach((obj) => {
+        this.total2 += obj.hargaBarangPromo;
+        this.total1 += obj.hargaBarang;
+        this.totalDiskon += obj.hargaSetelahPromo;
+      });
+    });
   }
 
   getEdit(arr: {
@@ -53,17 +73,10 @@ export class AdminPembayaranComponent implements OnInit {
     this.hargaPromo = arr.hargaBarangPromo;
   }
 
-  delete(arr: { id: string | undefined }, file: any) {
-    console.log(file);
-    this.deleteFile(file);
-    this.firestore.collection('barang').doc(arr.id).delete();
-    this.ngOnInit();
-  }
-
-  deleteFile(file: FileMetadata) {
-    if (window.confirm('Are you sure you want to delete' + file.name + '?')) {
-      this.fileService.deleteFile(file);
-      this.ngOnInit();
-    }
+  delete(produk: any) {
+    this.total2 = 0;
+    this.total1 = 0;
+    this.totalDiskon = 0;
+    this.firestore.collection('checkout').doc(produk.id).delete();
   }
 }

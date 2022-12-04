@@ -8,7 +8,8 @@ import { FileService } from '../shared/file.service';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-  public isLogin = localStorage.getItem('token');
+  isLogin = false;
+  public email = localStorage.getItem('email');
   public isActive = '';
   public produkActive = '';
   public promosiActive = '';
@@ -21,8 +22,11 @@ export class NavbarComponent implements OnInit {
   constructor(private auth: AuthService, public fileService: FileService) {}
 
   ngOnInit(): void {
+    if (localStorage.getItem('token') !== null) {
+      this.isLogin = true;
+    }
     this.isActive = this.fileService.catchData();
-    if (this.isLogin === 'disinitoken') {
+    if (this.isLogin) {
       this.menuAdmin = true;
       this.menuAnon = false;
       if (this.isActive === 'produk') {

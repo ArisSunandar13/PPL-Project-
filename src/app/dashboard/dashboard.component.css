@@ -30,7 +30,7 @@ div.col-md-3 {
   border-radius: 10px !important;
 }
 
-img{
+img {
   display: block;
   margin: auto;
   height: 300px;
@@ -166,10 +166,23 @@ img{
   font-size: 10px;
   color: grey;
 }
-.buy {
+
+button.buy {
+  background-color: #fff;
   font-size: 12px;
   color: purple;
   font-weight: 500;
+  border: 0px;
+  text-align: center;
+  text-decoration: none;
+}
+
+button.buy:hover {
+  border: 0px;
+}
+
+button.buy:active{
+  border: 0px solid white;
 }
 
 .voutchers {

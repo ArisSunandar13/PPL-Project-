@@ -5,16 +5,19 @@
   <table class="ui celled table">
     <thead>
       <tr class="ui center aligned">
+        <th>No.</th>
         <th>Nama Barang</th>
         <th>Stok</th>
         <th>Harga Asal</th>
         <th>Harga Promo</th>
+        <th>Potongan Promo</th>
         <th>Foto</th>
         <th>Aksi</th>
       </tr>
     </thead>
     <tbody class="ui center aligned">
-      <tr *ngFor="let produk of myData">
+      <tr *ngFor="let produk of myData; index as i">
+        <td data-label="No.">{{ i + 1 }}</td>
         <td data-label="Nama Barang">{{ produk.namaBarang }}</td>
         <td data-label="Stok">
           {{ produk.stokBarang.toLocaleString(["id"]) }}
@@ -25,21 +28,26 @@
         <td data-label="Harga" *ngIf="produk.hargaBarangPromo !== undefined">
           Rp. {{ produk.hargaBarangPromo.toLocaleString(["id"]) }}
         </td>
+        <td data-label="Harga">
+          Rp. {{ produk.hargaSetelahPromo.toLocaleString(["id"]) }}
+        </td>
         <td data-label="" *ngIf="produk.hargaBarangPromo === undefined"></td>
         <td data-label="Foto">
           <img style="height: 100px" [src]="produk.fotoUrl" alt="" />
         </td>
         <td data-label="Aksi">
           <div class="ui buttons">
-            <button class="ui positive button" (click)="getEdit(produk)">
-              Edit
-            </button>
-            <div class="or" data-text="/"></div>
-            <button class="ui button" (click)="delete(produk, produk)">
-              Hapus
-            </button>
+            <button class="ui button" (click)="delete(produk)">Hapus</button>
           </div>
         </td>
+      </tr>
+      <tr style="font-weight: bold; font-size: large;">
+        <td colspan="3">Total :</td>
+        <td>Rp. {{ total1.toLocaleString(["id"]) }}</td>
+        <td>Rp. {{ total2.toLocaleString(["id"]) }}</td>
+        <td>Rp. {{ totalDiskon.toLocaleString(["id"]) }}</td>
+        <td>Total Bayar :</td>
+        <td>Rp. {{ (total1 - totalDiskon).toLocaleString(["id"]) }}</td>
       </tr>
     </tbody>
   </table>

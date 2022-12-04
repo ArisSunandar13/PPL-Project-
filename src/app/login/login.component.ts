@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../shared/auth.service';
 
 @Component({
@@ -10,9 +11,13 @@ export class LoginComponent implements OnInit {
   email: string = '';
   password: string = '';
   user: any;
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService, private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (localStorage.getItem('token') !== null) {
+      this.router.navigate(['/admin-produk'])
+    }
+  }
   login() {
     if (this.email == '') {
       alert('Please enter email');

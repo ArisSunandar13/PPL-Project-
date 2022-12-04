@@ -6,14 +6,27 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
+  token: any;
+  email: any;
   constructor(private fireauth: AngularFireAuth, private router: Router) {}
+
+  getToken() {
+    return this.token;
+  }
+
+  getEmail() {
+    return this.email;
+  }
 
   login(email: string, password: string) {
     this.fireauth.signInWithEmailAndPassword(email, password).then(
       (userCredential) => {
-        localStorage.setItem('token', 'disinitoken');
+        this.token = userCredential.user?.refreshToken;
+        this.email = userCredential.user?.email;
+        localStorage.setItem('token', this.token);
+        localStorage.setItem('email', this.email);
         this.router.navigate(['/admin-produk']);
-        return userCredential.user;
+        return userCredential.user?.refreshToken;
       },
       (err) => {
         alert('Something went wrong');
@@ -35,9 +48,9 @@ export class AuthService {
   logout() {
     this.fireauth.signOut().then(
       () => {
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/login']);
         localStorage.removeItem('token');
-        window.location.reload();
+        localStorage.removeItem('email');
       },
       (err) => {
         alert(err.message);

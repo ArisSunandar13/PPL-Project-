@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { FileMetadata } from '../model/file-metadata';
+import { AuthService } from '../shared/auth.service';
 import { FileService } from '../shared/file.service';
 
 @Component({
@@ -22,6 +24,7 @@ export class AdminProdukComponent implements OnInit {
   isSimpan = false;
   tempId: any;
   afterUpload = '';
+  isLogin = false;
 
   selectedFiles!: FileList;
   currentFileUpload!: FileMetadata;
@@ -30,12 +33,19 @@ export class AdminProdukComponent implements OnInit {
   constructor(
     private firestore: AngularFirestore,
     private fileService: FileService,
-    private fireStorage: AngularFireStorage
+    private fireStorage: AngularFireStorage,
+    private auth: AuthService,
+    private router: Router
   ) {
     this.tampilData();
   }
   ngOnInit(): void {
-    console.log(this.tempId);
+    if (localStorage.getItem('') !== null) {
+      this.isLogin = true;
+    }
+    if (this.isLogin) {
+      this.router.navigate(['/login']);
+    }
     this.fileService.throwData(this.iAm);
     this.getAllFile();
   }

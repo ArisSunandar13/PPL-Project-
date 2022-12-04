@@ -44,6 +44,9 @@
       </a>
       <div class="right menu" *ngIf="menuAdmin">
         <div class="item">
+          <p>You logged in as <span style="color: green;">{{ email }}</span></p>
+        </div>
+        <div class="item">
           <a (click)="signout()" class="ui negative button">Logout</a>
         </div>
       </div>
