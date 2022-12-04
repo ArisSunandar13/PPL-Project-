@@ -25,6 +25,7 @@ export class AdminProdukComponent implements OnInit {
   tempId: any;
   afterUpload = '';
   isLogin = false;
+  namaFile = '';
 
   selectedFiles!: FileList;
   currentFileUpload!: FileMetadata;
@@ -58,7 +59,11 @@ export class AdminProdukComponent implements OnInit {
   }
   uploadFile() {
     this.currentFileUpload = new FileMetadata(this.selectedFiles[0]);
-    const path = 'uploads/' + (this.nama + this.currentFileUpload.file.name);
+    console.log(this.nama);
+    console.log(this.currentFileUpload.file.name);
+    this.namaFile = this.currentFileUpload.file.name;
+    const path =
+      'fotoProdukStorage/' + (this.nama + this.currentFileUpload.file.name);
     const storageRef = this.fireStorage.ref(path);
     const uploadTask = storageRef.put(this.selectedFiles[0]);
 
@@ -107,7 +112,7 @@ export class AdminProdukComponent implements OnInit {
   }
 
   tampilData() {
-    let data = this.firestore.collection('barang');
+    let data = this.fileService.tampilData();
     let dataTerbaru = data.valueChanges({ idField: 'id' });
     dataTerbaru.subscribe((ss) => (this.myData = ss));
     this.isEdit = false;
@@ -123,9 +128,8 @@ export class AdminProdukComponent implements OnInit {
       fotoUrl: this.currentFileUpload.url,
     };
     console.log(data);
-    this.firestore
-      .collection('barang')
-      .add(data)
+    this.fileService
+      .simpanData(data)
       .then((res) => {
         this.isSimpan = false;
         this.tampilData();
@@ -155,10 +159,8 @@ export class AdminProdukComponent implements OnInit {
       stokBarang: this.stok,
       hargaBarang: this.harga,
     };
-    this.firestore
-      .collection('barang')
-      .doc(this.id)
-      .update(data)
+    this.fileService
+      .updateData(this.id, data)
       .then((res) => {
         console.log(res);
         this.tampilData();
@@ -174,9 +176,7 @@ export class AdminProdukComponent implements OnInit {
     if (
       window.confirm('Are you sure you want to delete ' + data.namaBarang + '?')
     ) {
-      this.fireStore.collection('/upload').doc(data.id).delete();
-      this.fireStorage.ref('/uploads/' + data.fotoName).delete();
-      this.firestore.collection('barang').doc(data.id).delete();
+      this.fileService.deleteData(data);
       this.ngOnInit();
     } else {
       this.ngOnInit();

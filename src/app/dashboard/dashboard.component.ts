@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
   }
 
   tampilData() {
-    let data = this.firestore.collection('barang');
+    let data = this.fileService.tampilData();
     let dataTerbaru = data.valueChanges({ idField: 'id' });
     dataTerbaru.subscribe((ss) => (this.myData = ss));
   }

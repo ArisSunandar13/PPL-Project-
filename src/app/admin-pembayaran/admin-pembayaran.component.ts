@@ -25,7 +25,7 @@ export class AdminPembayaranComponent implements OnInit {
 
   constructor(
     public fileService: FileService,
-    private firestore: AngularFirestore,
+    private fireStore: AngularFirestore,
     private auth: AuthService,
     private router: Router
   ) {
@@ -47,7 +47,7 @@ export class AdminPembayaranComponent implements OnInit {
   }
 
   tampilData() {
-    let data = this.firestore.collection('checkout');
+    let data = this.fireStore.collection('checkout');
     let dataTerbaru = data.valueChanges({ idField: 'id' });
     dataTerbaru.subscribe((ss) => {
       this.myData = ss;
@@ -77,6 +77,6 @@ export class AdminPembayaranComponent implements OnInit {
     this.total2 = 0;
     this.total1 = 0;
     this.totalDiskon = 0;
-    this.firestore.collection('checkout').doc(produk.id).delete();
+    this.fireStore.collection('checkout').doc(produk.id).delete();
   }
 }

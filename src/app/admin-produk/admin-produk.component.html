@@ -27,14 +27,13 @@
         (change)="selectFile($event)"
         [(ngModel)]="afterUpload"
       />
-      <!-- <button
-        style="margin: 0px 10px; height: 44px"
+      <button
+        style="margin: 0px 10px; height: 44px; width: 300px"
         class="upload ui negative basic button"
         [disabled]="!isUpload"
-        (click)="uploadFile()"
       >
-        Upload
-      </button> -->
+        {{ namaFile }}
+      </button>
     </div>
     <!-- <div class="field">
       <table>
@@ -113,9 +112,7 @@
               Edit
             </button>
             <div class="or" data-text="/"></div>
-            <button class="ui button" (click)="delete(item)">
-              Hapus
-            </button>
+            <button class="ui button" (click)="delete(item)">Hapus</button>
           </div>
         </td>
       </tr>

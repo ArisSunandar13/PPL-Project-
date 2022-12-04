@@ -28,14 +28,14 @@
         name="harga"
         autocomplete="off"
       />
-    </div>
-    <div class="field" style="display: inline">
+    <!-- </div> -->
+    <!-- <div class="field" style="display: inline">
       <input
         style="width: 300px"
         type="file"
         (change)="selectFile($event)"
         [(ngModel)]="afterUpload"
-      />
+      /> -->
       <!-- <button
         style="margin: 0px 10px; height: 44px"
         class="upload ui negative basic button"
@@ -44,7 +44,7 @@
       >
         Upload
       </button> -->
-    </div>
+    <!-- </div> -->
     <!-- <div class="field">
       <table>
         <thead>
@@ -73,27 +73,19 @@
       <button
         style="margin: 0px 5px"
         class="ui primary button"
-        *ngIf="!isEdit"
-        [disabled]="!isSimpan"
-        (click)="simpan()"
-      >
-        Simpan
-      </button>
-      <div
-        style="margin: 0px 5px"
-        class="ui inverted primary button"
-        *ngIf="isEdit"
+        [disabled]="!isEdit"
         (click)="edit()"
       >
-        Perbarui
-      </div>
-      <div
+      Publish Promo
+      </button>
+      <button
         style="margin: 0px 5px"
-        class="ui inverted secondary button"
+        class="ui button"
+        [disabled]="!isEdit"
         (click)="reset()"
       >
-        Reset
-      </div>
+      Reset
+      </button>
     </div>
   </div>
   <table class="ui celled table">
@@ -124,12 +116,12 @@
         <td data-label="Aksi">
           <div class="ui buttons">
             <button class="ui positive button" (click)="getEdit(item)">
-              Edit
+              Edit Promosi
             </button>
-            <div class="or" data-text="/"></div>
+            <!-- <div class="or" data-text="/"></div>
             <button class="ui button" (click)="delete(item)">
               Hapus
-            </button>
+            </button> -->
           </div>
         </td>
       </tr>
