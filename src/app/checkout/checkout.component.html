@@ -1,18 +1,13 @@
 <app-navbar></app-navbar>
 
 <div class="ui container">
-  <h1 style="padding-top: 2rem; text-align: center">Manajemen Pembayaran</h1>
-  <div style="display: inline" *ngFor="let customer of pemesan">
-    <button style="margin-right: 5px" (click)="tampil(customer.namaPemesan)">
-      {{ customer.namaPemesan }} - {{ customer.tanggalKunjungan }}
-    </button>
-  </div>
+  <h1 style="padding-top: 2rem; text-align: center">Checkout</h1>
+
   <table class="ui celled table">
     <thead>
       <tr class="ui center aligned">
         <th>No.</th>
         <th>Nama Barang</th>
-        <th>Stok</th>
         <th>Harga Asal</th>
         <th>Harga Promo</th>
         <th>Potongan Promo</th>
@@ -24,9 +19,6 @@
       <tr *ngFor="let produk of myData; index as i">
         <td data-label="No.">{{ i + 1 }}</td>
         <td data-label="Nama Barang">{{ produk.namaBarang }}</td>
-        <td data-label="Stok">
-          {{ produk.stokBarang.toLocaleString(["id"]) }}
-        </td>
         <td data-label="Harga">
           Rp. {{ produk.hargaBarang.toLocaleString(["id"]) }}
         </td>
@@ -47,7 +39,7 @@
         </td>
       </tr>
       <tr style="font-weight: bold; font-size: large">
-        <td colspan="3">Total :</td>
+        <td colspan="2">Total :</td>
         <td>Rp. {{ total1.toLocaleString(["id"]) }}</td>
         <td>Rp. {{ total2.toLocaleString(["id"]) }}</td>
         <td>Rp. {{ totalDiskon.toLocaleString(["id"]) }}</td>
@@ -56,4 +48,35 @@
       </tr>
     </tbody>
   </table>
+
+  <h3 style="padding-top: 2rem; text-align: center">Detail Pemesan</h3>
+
+  <div class="ui form">
+    <div class="field">
+      <label>Nama Pemesan</label>
+      <input
+        type="text"
+        [(ngModel)]="namaPemesan"
+        name="nama"
+        autocomplete="off"
+      />
+    </div>
+    <div class="field">
+      <label>Tanggal Kunjungan</label>
+      <input
+        type="date"
+        [(ngModel)]="tanggalKunjungan"
+        name="date"
+        style="width: 150px"
+      />
+      <button
+        style="margin: 0px 5px; height: 39px"
+        class="ui primary button"
+        (click)="pesan()"
+      >
+        Pesan
+      </button>
+    </div>
+  </div>
+  <div class="ui field">{{ message }}</div>
 </div>

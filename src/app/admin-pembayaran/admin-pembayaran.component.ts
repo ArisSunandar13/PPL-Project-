@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { FileMetadata } from '../model/file-metadata';
 import { AuthService } from '../shared/auth.service';
 import { FileService } from '../shared/file.service';
 
@@ -23,13 +22,16 @@ export class AdminPembayaranComponent implements OnInit {
   total2 = 0;
   totalDiskon = 0;
 
+  pemesan: any[] = [];
+  pesanan = '';
+
   constructor(
     public fileService: FileService,
     private fireStore: AngularFirestore,
     private auth: AuthService,
     private router: Router
   ) {
-    this.tampilData();
+    this.dataPemesan();
   }
 
   ngOnInit(): void {
@@ -42,12 +44,26 @@ export class AdminPembayaranComponent implements OnInit {
     this.fileService.throwData(this.iAm);
   }
 
+  tampil(nama: any) {
+    this.pesanan = nama;
+    this.tampilData();
+  }
+
   parse(data: any) {
     return parseInt(data);
   }
 
+  dataPemesan() {
+    let data = this.fireStore.collection('dataPemesan');
+    let dataTerbaru = data.valueChanges({ idField: 'id' });
+    dataTerbaru.subscribe((ss) => {
+      this.pemesan = ss;
+    });
+  }
+
   tampilData() {
-    let data = this.fireStore.collection('checkout');
+    console.log(this.pesanan);
+    let data = this.fireStore.collection(this.pesanan);
     let dataTerbaru = data.valueChanges({ idField: 'id' });
     dataTerbaru.subscribe((ss) => {
       this.myData = ss;
@@ -77,6 +93,6 @@ export class AdminPembayaranComponent implements OnInit {
     this.total2 = 0;
     this.total1 = 0;
     this.totalDiskon = 0;
-    this.fireStore.collection('checkout').doc(produk.id).delete();
+    this.fireStore.collection(this.pesanan).doc(produk.id).delete();
   }
 }

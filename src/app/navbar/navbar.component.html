@@ -15,6 +15,13 @@
         Dashboard
       </a>
       <a
+        class="item {{ checkoutActive }}"
+        routerLink="/checkout"
+        *ngIf="menuAnon || menuAdmin"
+      >
+        Checkout
+      </a>
+      <a
         class="item {{ aboutusActive }}"
         routerLink="/about-us"
         *ngIf="menuAnon || menuAdmin"

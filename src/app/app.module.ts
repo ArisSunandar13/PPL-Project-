@@ -15,6 +15,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AdminPembayaranComponent } from './admin-pembayaran/admin-pembayaran.component';
 import { AdminPromosiComponent } from './admin-promosi/admin-promosi.component';
 import { AboutUsComponent } from './about-us/about-us.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { AboutUsComponent } from './about-us/about-us.component';
     AdminPembayaranComponent,
     AdminPromosiComponent,
     AboutUsComponent,
+    CheckoutComponent,
   ],
   imports: [
     BrowserModule,

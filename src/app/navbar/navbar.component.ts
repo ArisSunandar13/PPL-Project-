@@ -15,6 +15,7 @@ export class NavbarComponent implements OnInit {
   public promosiActive = '';
   public pembayaranActive = '';
   public dashboardActive = '';
+  public checkoutActive = '';
   public aboutusActive = '';
   public menuAdmin = true;
   public menuAnon = true;
@@ -34,18 +35,21 @@ export class NavbarComponent implements OnInit {
         this.promosiActive = '';
         this.pembayaranActive = '';
         this.dashboardActive = '';
+        this.checkoutActive = '';
         this.aboutusActive = '';
       } else if (this.isActive === 'promosi') {
         this.produkActive = '';
         this.promosiActive = 'active';
         this.pembayaranActive = '';
         this.dashboardActive = '';
+        this.checkoutActive = '';
         this.aboutusActive = '';
       } else if (this.isActive === 'pembayaran') {
         this.produkActive = '';
         this.promosiActive = '';
         this.pembayaranActive = 'active';
         this.dashboardActive = '';
+        this.checkoutActive = '';
         this.aboutusActive = '';
       } else if (this.isActive === 'dashboard') {
         this.produkActive = '';
@@ -54,6 +58,7 @@ export class NavbarComponent implements OnInit {
         this.dashboardActive = '';
         this.aboutusActive = '';
         this.dashboardActive = 'active';
+        this.checkoutActive = '';
         this.aboutusActive = '';
       } else if (this.isActive === 'about-us') {
         this.produkActive = '';
@@ -62,7 +67,17 @@ export class NavbarComponent implements OnInit {
         this.dashboardActive = '';
         this.aboutusActive = '';
         this.dashboardActive = '';
+        this.checkoutActive = '';
         this.aboutusActive = 'active';
+      } else if (this.isActive === 'checkout') {
+        this.produkActive = '';
+        this.promosiActive = '';
+        this.pembayaranActive = '';
+        this.dashboardActive = '';
+        this.aboutusActive = '';
+        this.dashboardActive = '';
+        this.checkoutActive = 'active';
+        this.aboutusActive = '';
       }
     } else {
       this.menuAdmin = false;
@@ -73,6 +88,10 @@ export class NavbarComponent implements OnInit {
       } else if (this.isActive === 'about-us') {
         this.dashboardActive = '';
         this.aboutusActive = 'active';
+      } else if (this.isActive === 'checkout') {
+        this.dashboardActive = '';
+        this.aboutusActive = '';
+        this.checkoutActive = 'active';
       }
     }
   }
