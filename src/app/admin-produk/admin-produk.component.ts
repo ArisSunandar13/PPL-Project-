@@ -41,10 +41,9 @@ export class AdminProdukComponent implements OnInit {
     this.tampilData();
   }
   ngOnInit(): void {
-    if (localStorage.getItem('') !== null) {
+    if (localStorage.getItem('token') !== null) {
       this.isLogin = true;
-    }
-    if (this.isLogin) {
+    } else {
       this.router.navigate(['/login']);
     }
     this.fileService.throwData(this.iAm);
