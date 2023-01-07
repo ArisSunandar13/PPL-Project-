@@ -3,9 +3,17 @@
 <div class="ui container">
   <h1 style="padding-top: 2rem; text-align: center">Manajemen Pembayaran</h1>
   <div style="display: inline" *ngFor="let customer of pemesan">
-    <button style="margin-right: 5px" (click)="tampil(customer.namaPemesan)">
+    <!-- <button style="margin-right: 5px" (click)="tampil(customer.namaPemesan)">
       {{ customer.namaPemesan }} - {{ customer.tanggalKunjungan }}
-    </button>
+    </button> -->
+    <div class="ui icon buttons">
+      <button class="ui green button" (click)="tampil(customer.namaPemesan)">
+        {{ customer.namaPemesan }} - {{ customer.tanggalKunjungan }}
+      </button>
+      <button class="ui red button" style="margin-right: 5px" (click)="deletePemesan(customer)">
+        <i class="delete icon"></i>
+      </button>
+    </div>
   </div>
   <table class="ui celled table">
     <thead>

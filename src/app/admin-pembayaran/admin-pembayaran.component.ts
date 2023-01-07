@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { AuthService } from '../shared/auth.service';
 import { FileService } from '../shared/file.service';
+import firebase from 'firebase/compat/app';
 
 @Component({
   selector: 'app-admin-pembayaran',
@@ -10,6 +11,7 @@ import { FileService } from '../shared/file.service';
   styleUrls: ['./admin-pembayaran.component.css'],
 })
 export class AdminPembayaranComponent implements OnInit {
+  db = firebase.firestore();
   iAm = 'pembayaran';
   myData: any[] = [];
   id: string | undefined;
@@ -44,6 +46,21 @@ export class AdminPembayaranComponent implements OnInit {
     this.fileService.throwData(this.iAm);
   }
 
+  deletePemesan(data: any) {
+    if (window.confirm('Yakin akan di Hapus?')) {
+      this.fireStore.collection('dataPemesan').doc(data.id).delete();
+      this.db
+        .collection(data.namaPemesan)
+        .get()
+        .then((res: any) => {
+          res.forEach((ress: any) => {
+            this.fireStore.collection(data.namaPemesan).doc(ress.id).delete();
+          });
+        });
+    }
+    this.tampilData();
+  }
+
   tampil(nama: any) {
     this.pesanan = nama;
     this.tampilData();
@@ -62,11 +79,14 @@ export class AdminPembayaranComponent implements OnInit {
   }
 
   tampilData() {
-    console.log(this.pesanan);
-    let data = this.fireStore.collection(this.pesanan);
-    let dataTerbaru = data.valueChanges({ idField: 'id' });
+    let dataTerbaru = this.fireStore
+      .collection(this.pesanan)
+      .valueChanges({ idField: 'id' });
     dataTerbaru.subscribe((ss) => {
       this.myData = ss;
+      this.total2 = 0;
+      this.total1 = 0;
+      this.totalDiskon = 0;
       this.myData.forEach((obj) => {
         this.total2 += obj.hargaBarangPromo;
         this.total1 += obj.hargaBarang;
